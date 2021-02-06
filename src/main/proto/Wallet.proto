@@ -1,0 +1,30 @@
+syntax ="proto3";
+
+package  grpcwallet;
+
+option java_package = "com.inpg.grpc.wallet.v1";
+option java_multiple_files = true;
+
+service Walletservice {
+
+  rpc postWallet(WalletPostReq) returns (WalletPostRes) ;
+  rpc getWallet(WalletGetReq) returns (WalletGetRes) ;
+}
+
+message WalletPostReq{
+   int32 phoneId=1;
+   int32 phone=2;
+   int32 wallBalance=3;
+}
+
+message WalletPostRes{
+  string wallmessg=1;
+}
+
+message WalletGetReq{
+  int32 phone=1;
+}
+
+message WalletGetRes{
+  int32 wallBalance=1;
+}
