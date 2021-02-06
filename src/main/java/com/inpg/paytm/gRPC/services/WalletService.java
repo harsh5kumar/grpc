@@ -48,25 +48,25 @@ public class WalletService extends WalletserviceGrpc.WalletserviceImplBase {
             String wallmessg= "user doesn't exists "+"  with phonenum :: " + walletPostReq.getPhone();
             walletPostRes= WalletPostRes.newBuilder().setWallmessg(wallmessg).build();
         }
-
         responseObserver.onNext(walletPostRes);
         responseObserver.onCompleted();
 
     }
 
-    ////////////////////////////////////////
+    ////////////GET wallbalance for phone number//////////////////////////////////////////////
 
     @Override
     public void getWallet(WalletGetReq walletGetReq, StreamObserver<WalletGetRes> responseObserver) {
 
-        System.out.println(walletGetReq.getPhone());
+        System.out.println("showing wallBalance for phone_num :: "+ walletGetReq.getPhone());
+        List<WalletEntity> phone_num=walletRepository.findByPhone(walletGetReq.getPhone());
 
-        int bal=1000;
+        int bal=phone_num.get(0).getWallBalance();
 
         WalletGetRes walletGetRes=WalletGetRes.newBuilder().setWallBalance(bal).build();
 
         responseObserver.onNext(walletGetRes);
         responseObserver.onCompleted();
-        //super.getWallet(walletGetReq, responseObserver);
+
     }
 }
