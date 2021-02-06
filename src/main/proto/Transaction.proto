@@ -1,0 +1,36 @@
+syntax ="proto3";
+
+package  grpctxn;
+
+option java_package = "com.inpg.grpc.wallet.v2";
+option java_multiple_files = true;
+
+service TransactionService{
+
+  rpc posttxn(TxnPostReq) returns (TxnPostRes) ;
+  rpc gettxn(TxnGetReq) returns (TxnGetRes) ;
+}
+
+message TxnPostReq{
+  int32 txnid=1;
+  int32 payerphonenumber=2;
+  int32 payeephonenumber=3;
+  int32 txnamount=4;
+}
+
+message TxnPostRes{
+  string Txnmessg=1;
+}
+
+message TxnGetReq{
+  int32 txnid=1;
+}
+
+message TxnGetRes{
+  int32 txnid=1;
+  int32 payerphonenumber=2;
+  int32 payeephonenumber=3;
+  int32 txnamount=4;
+  string Txnstatus=5;
+
+}
