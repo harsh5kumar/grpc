@@ -5,9 +5,9 @@ import javax.persistence.*;
 @Entity
 //this is the entitymodule class
 @Table(name="userdata")
-public class User {
+public class UserEntity {
 
-    private Integer id;
+    private Integer userid;
     private String userName;
     private String firstName;
     private String lastName;
@@ -18,16 +18,16 @@ public class User {
 
     //using super class constructor
 
-    public User() {
+    public UserEntity() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     //mapping of entity variables
-    public User(Integer id, String userName, String firstName, String lastName, Integer mobileNumber, String emailid,
-                String address1, String address2) {
+    public UserEntity(Integer userid, String userName, String firstName, String lastName, Integer mobileNumber, String emailid,
+                      String address1, String address2) {
         super();
-        this.id = id;
+        this.userid = userid;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,12 +40,12 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     //methods for the entity attributes
-    public Integer getId() {
-        return id;
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 
     public String getUserName() {

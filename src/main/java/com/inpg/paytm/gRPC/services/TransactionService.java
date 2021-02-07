@@ -1,5 +1,6 @@
 package com.inpg.paytm.gRPC.services;
 
+import com.inpg.grpc.wallet.v1.WalletGetRes;
 import com.inpg.grpc.wallet.v1.WalletPostRes;
 import com.inpg.grpc.wallet.v2.*;
 import com.inpg.paytm.gRPC.entities.TransactionEntity;
@@ -28,8 +29,8 @@ public class TransactionService extends TransactionServiceGrpc.TransactionServic
                 ,txnPostReq.getPayerphonenumber(), txnPostReq.getPayeephonenumber()
                 , txnPostReq.getTxnamount() );
 
-        List<WalletEntity> payer_num=walletRepository.findByPhone(txnPostReq.getPayerphonenumber());
-        List<WalletEntity> payee_num=walletRepository.findByPhone(txnPostReq.getPayeephonenumber());
+        List<WalletEntity> payer_num=walletRepository.findByPhone(transaction.getPayerphonenumber());
+        List<WalletEntity> payee_num=walletRepository.findByPhone(transaction.getPayeephonenumber());
 
         TxnPostRes txnPostRes;
 
@@ -53,7 +54,7 @@ public class TransactionService extends TransactionServiceGrpc.TransactionServic
                     walletRepository.save(payer);
                     walletRepository.save(payee);
 
-                    String txnmessg= "Transaction done"+"  with txnid :: " + txnPostReq.getTxnid();
+                    String txnmessg= "Transaction done"+"  with txnAmount :: " + txnPostReq.getTxnamount();
                     txnPostRes= TxnPostRes.newBuilder().setTxnmessg(txnmessg).build();
                 }
                 else txnPostRes= TxnPostRes.newBuilder().setTxnmessg("Insufficient funds").build();
@@ -67,6 +68,21 @@ public class TransactionService extends TransactionServiceGrpc.TransactionServic
 
     @Override
     public void gettxn(TxnGetReq txnGetReq, StreamObserver<TxnGetRes> responseObserver) {
+
+        List<TransactionEntity> txn=transactionRepository.findBytxnid(txnGetReq.getTxnid());
+
+        TxnGetRes.Builder txnGetRes=TxnGetRes.newBuilder();
+
+        txnGetRes.setTxnid(txn.get(0).getTxnid());
+        txnGetRes.setPayerphonenumber(txn.get(0).getPayerphonenumber());
+        txnGetRes.setPayeephonenumber(txn.get(0).getPayeephonenumber());
+        txnGetRes.setTxnamount(txn.get(0).getTxnamount());
+        txnGetRes.setTxnstatus("Success");
+
+
+
+        responseObserver.onNext(txnGetRes.build());
+        responseObserver.onCompleted();
 
     }
 }

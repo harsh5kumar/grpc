@@ -1,0 +1,43 @@
+syntax ="proto3";
+
+package  grpcuser;
+
+option java_package = "com.inpg.grpc.wallet.v3";
+option java_multiple_files = true;
+
+service UserService{
+
+  rpc postuser(UserPostReq) returns (UserPostRes) ;
+  rpc getuser(UserGetReq) returns (UserGetRes) ;
+}
+
+message UserPostReq{
+   int32 userid=1;
+   string userName=2;
+   string firstName=3;
+   string lastName=4;
+   int32 mobileNumber=5;
+   string emailid=6;
+   string address1=7;
+   string address2=8;
+}
+
+message UserPostRes{
+  string Usermessg=1;
+}
+
+message UserGetReq{
+  int32 userid=1;
+}
+
+message UserGetRes{
+  int32 userid=1;
+  string userName=2;
+  string firstName=3;
+  string lastName=4;
+  int32 mobileNumber=5;
+  string emailid=6;
+  string address1=7;
+  string address2=8;
+
+}

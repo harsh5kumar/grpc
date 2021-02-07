@@ -1,7 +1,7 @@
 package com.inpg.paytm.gRPC.services;
 
 import com.inpg.grpc.wallet.v1.*;
-import com.inpg.paytm.gRPC.entities.User;
+import com.inpg.paytm.gRPC.entities.UserEntity;
 import com.inpg.paytm.gRPC.entities.WalletEntity;
 import com.inpg.paytm.gRPC.repositories.UserRepository;
 import com.inpg.paytm.gRPC.repositories.WalletRepository;
@@ -31,7 +31,7 @@ public class WalletService extends WalletserviceGrpc.WalletserviceImplBase {
                 walletPostReq.getPhone(),walletPostReq.getWallBalance());
 
         List<WalletEntity> phone_num=walletRepository.findByPhone(walletPostReq.getPhone());
-        List<User> user_phone_number=userRepository.findByMobileNumber(walletPostReq.getPhone());
+        List<UserEntity> user_phone_number=userRepository.findByMobileNumber(walletPostReq.getPhone());
 
         WalletPostRes walletPostRes;
 
